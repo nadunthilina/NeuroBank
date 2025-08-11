@@ -8,6 +8,7 @@ import Recommendations from './components/Recommendations'
 import Plans from './components/Plans'
 import AdminPanel from './components/AdminPanel'
 import Analytics from './components/Analytics'
+import Premium from './components/Premium'
 
 function App() {
   const [session, setSession] = useState(() => {
@@ -57,7 +58,7 @@ function App() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex gap-2 flex-wrap">
-                    {['ledger','predict','alerts','recs','plans','analytics', ...(session?.user?.role==='admin'?['admin']:[])].map(t => (
+                    {['ledger','predict','alerts','recs','plans','analytics', ...((session?.user?.role==='premium'||session?.user?.role==='admin')?['premium']:[]), ...(session?.user?.role==='admin'?['admin']:[])].map(t => (
                       <button key={t} className={`px-3 py-1 rounded ${tab===t?'bg-indigo-600 text-white':'bg-gray-200'}`} onClick={()=>setTab(t)}>
                         {t==='ledger'?'Ledger':t==='predict'?'Prediction':t==='alerts'?'Alerts':t==='recs'?'Recovery':t==='plans'?'Plans':'Admin'}
                       </button>
@@ -74,7 +75,8 @@ function App() {
                 {tab==='recs' && <Recommendations token={session.token} />}
                 {tab==='plans' && <Plans token={session.token} />}
                 {tab==='analytics' && <Analytics token={session.token} />}
-                {tab==='admin' && <AdminPanel token={session.token} />}
+                {tab==='premium' && <Premium token={session.token} />}
+                {tab==='admin' && (session?.user?.role==='admin' ? <AdminPanel token={session.token} /> : <div className="p-4 bg-white rounded shadow text-red-600">Admin access required</div>)}
               </div>
             )}
           </div>
