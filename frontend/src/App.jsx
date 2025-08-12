@@ -60,7 +60,7 @@ function App() {
                   <div className="flex gap-2 flex-wrap">
                     {['ledger','predict','alerts','recs','plans','analytics', ...((session?.user?.role==='premium'||session?.user?.role==='admin')?['premium']:[]), ...(session?.user?.role==='admin'?['admin']:[])].map(t => (
                       <button key={t} className={`px-3 py-1 rounded ${tab===t?'bg-indigo-600 text-white':'bg-gray-200'}`} onClick={()=>setTab(t)}>
-                        {t==='ledger'?'Ledger':t==='predict'?'Prediction':t==='alerts'?'Alerts':t==='recs'?'Recovery':t==='plans'?'Plans':'Admin'}
+                        {t==='ledger'?'Ledger':t==='predict'?'Prediction':t==='alerts'?'Alerts':t==='recs'?'Recovery':t==='plans'?'Plans':t==='analytics'?'Analytics':t==='premium'?'Premium':'Admin'}
                       </button>
                     ))}
                   </div>
