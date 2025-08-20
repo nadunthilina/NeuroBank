@@ -5,10 +5,13 @@ module.exports = function auth(req, res, next) {
   const token = header.startsWith('Bearer ') ? header.slice(7) : null;
   if (!token) return res.status(401).json({ error: 'Missing token' });
   try {
-  const decoded = jwt.verify(token, process.env.JWT_SECRET || 'dev_secret');
-  req.user = { id: decoded.sub, email: decoded.email, role: decoded.role };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'dev_secret');
+    req.user = { id: decoded.sub, email: decoded.email, role: decoded.role };
     next();
   } catch (err) {
+    if (err && err.name === 'TokenExpiredError') {
+      return res.status(401).json({ error: 'Token expired' });
+    }
     return res.status(401).json({ error: 'Invalid token' });
   }
 };
