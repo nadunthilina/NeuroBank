@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import AuthPanel from './components/auth/AuthPanel'
+import Landing from './components/landing/Landing'
 import Ledger from './components/Ledger'
 import Predictions from './components/Predictions'
 import Alerts from './components/Alerts'
@@ -53,7 +54,7 @@ function App() {
           
           <div className="mt-8 grid gap-6">
             {!session ? (
-              <AuthPanel onAuth={(s)=>{ localStorage.setItem('user', JSON.stringify(s.user)); setSession(s); }} />
+              <Landing onAuth={(s)=>{ localStorage.setItem('user', JSON.stringify(s.user)); setSession(s); }} />
             ) : (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
